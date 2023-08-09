@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <table class="table table-striped">
+        <tbody id="MyTBody">
+
+        </tbody> 
+    </table>
+    <script>
+        $(document).ready(function(){
+            $.getJSON("https://script.google.com/macros/s/AKfycbxOzdaK0Xao7NOEF5rbf6jto6bDHyiwVkJlpH6wwPv-_M9PFFpZuHUMoiXlONf7NQ2lgg/exec",
+            function(data)
+            {
+                var table= "", rows ="", colum ="";
+                $.each(data, function(key,value){
+                    colum =""
+                    $.each(value, function(key1,value1){
+                        colum = colum + '<td>'+value1+'</td>'
+                    })
+                    rows = rows + '<tr>'+colum+'</tr>' 
+                })
+                $("#MyTBody").append(rows)
+                console.log(rows)
+            })
+        })
+    </script>
+</body>
+</html>
