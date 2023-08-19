@@ -6,14 +6,19 @@
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.8/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
 </head>
 <body>
     <table class="table table-striped">
         <tbody id="MyTBody">
 
         </tbody> 
+        <button onclick="exportToExcel()">export</button>
     </table>
     <script>
+        
         $(document).ready(function(){
             $.getJSON("https://script.google.com/macros/s/AKfycby0lhonu_Q1hqee5QqQC7dg16BodIw3QZmfOG4u_bV4WORYsl3c4L5yV0KKk447kq4Ltg/exec",
             function(data)
@@ -27,9 +32,24 @@
                     rows = rows + '<tr>'+colum+'</tr>' 
                 })
                 $("#MyTBody").append(rows)
-                console.log(rows)
+             
+                table = rows
+                console.log(table)
             })
-        })
+            
+    })
+    function exportToExcel(){
+        var table = document.getElementById('MyTBody');
+
+        //convert the table to workbook object
+        var workbook    =  XLSX.utils.table_to_book(table);
+
+        //generate xlsx file from wokbook
+        var excelData = XLSX.write(workbook,{bookType:'xlsx',type:'array'});
+
+        //save the file
+        saveAs(new Blob([excelData],{type:'application/octet-stream'}),'users.xlsx');
+         }
     </script>
 </body>
 </html>
